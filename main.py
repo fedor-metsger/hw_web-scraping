@@ -19,6 +19,10 @@ def request_datapage(pg: int, kw: str) -> (list, int):
     res, pages = [], 0
     try:
         response = requests.get(url, params=params)
+        if response.status_code != 200:
+            print("Ошибка при запросе данных с сайта HeadHunter: Status code ", response.status_code)
+            return None, None
+
         pages = response.json()["pages"]
         for i in response.json()["items"]:
             # print(i["id"])
