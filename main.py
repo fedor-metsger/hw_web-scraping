@@ -1,10 +1,10 @@
 
 import requests
 import json
-from pprint import pprint
+from scraper import scrape_data
 
 OUTPUT_FILENAME = "hh.json"
-PAGE_SIZE = 100
+PAGE_SIZE = 20
 
 def request_datapage(pg: int, kw: str) -> (list, int):
 
@@ -35,7 +35,7 @@ def request_datapage(pg: int, kw: str) -> (list, int):
                 salary_to = i["salary"]["to"]
                 currency = i["salary"]["currency"]
             # res.append(HHVacancy(i["name"], i["employer"]["name"], i["url"], i["snippet"]["responsibility"], i["salary"]["from"]))
-            res.append({"name": i["name"], "company": company, "url": i["url"], "descr": descr,
+            res.append({"name": i["name"], "company": company, "url": i["url"],
                         "salary_from": salary_from, "salary_to": salary_to, "currency": currency,
                         "url": i["url"], "city": city})
     except Exception as e:
@@ -73,7 +73,8 @@ def write_data(data:str) -> bool:
 
 def main():
 
-    data = request_data("Flask Django")
+#    data = request_data("Flask Django")
+    data = scrape_data("Flask Django")
 
     if data == None or len(data) == 0: return
 
